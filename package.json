@@ -6,7 +6,7 @@
   "scripts": {
     "deploy": "node deploy-commands.js",
     "model": "node test.js",
-    "log": "node logger.js",
+    "dev": "node . | pino-pretty -i pid,hostname -t 'yyyy-mm-dd HH:MM:ss'"
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
