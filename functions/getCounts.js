@@ -1,5 +1,4 @@
 const sql = require("../db")
-const logger = require("../logger")
 
 async function getCounts() {
     try {
@@ -8,8 +7,7 @@ async function getCounts() {
         `
         return counts
     } catch (error) {
-        logger.error("SQL ERROR:", error);
-        logger.error("Node ERROR:", error);
+
         console.error("SQL ERROR:", error);
         console.error("Node ERROR:", error);
     }

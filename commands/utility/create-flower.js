@@ -1,12 +1,12 @@
 const { SlashCommandBuilder } = require("discord.js");
-
+const sql = require("../../db");
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("create")
+    .setName("create-flower")
     .setDescription("Add a flower to the database.")
     .addStringOption((option) =>
       option
-        .setName("create-flower")
+        .setName("flower")
         .setDescription("A new flower to add to the database. Spelling counts!")
         .setRequired(true),
     )
@@ -16,11 +16,11 @@ module.exports = {
         .setDescription("flower rarity")
         .setRequired(true)
         .addChoices(
-          { name: "Normal", value: "N" },
-          { name: "Rare", value: "R" },
-          { name: "Super Rare", value: "SR" },
-          { name: "Super Super Rare", value: "SSR" },
-          { name: "Ultra Rare", value: "UR" },
+          { name: "N", value: "N" },
+          { name: "R", value: "R" },
+          { name: "SR", value: "SR" },
+          { name: "SSR", value: "SSR" },
+          { name: "UR", value: "UR" },
         ),
     ),
   async execute(interaction) {
@@ -48,8 +48,6 @@ module.exports = {
       await interaction.editReply(
         "Andrea doesn't have this one working yet, but she'll get there eventually! Don't yell. I am nice.",
       );
-      logger.error("SQL ERROR:", error);
-      logger.error("Node ERROR:", error);
       console.error("SQL ERROR:", error);
       console.error("Node ERROR:", error);
     }
