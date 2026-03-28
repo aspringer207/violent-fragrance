@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
+const { SlashCommandBuilder } = require('discord.js');
 
 const { getCounts } = require( "../../functions/getCounts" )
 module.exports = {data: new SlashCommandBuilder().setName('get-counts').setDescription('get database counts by rarity'),
