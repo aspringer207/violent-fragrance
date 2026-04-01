@@ -2,7 +2,7 @@ const sql = require("../db");
 async function getFlowerList() {
     try {
         const flowerList = await sql`
-        select flower_id, flower_name, flower_rarity from tcf.flowers
+        select * from tcf.flowers
         `
         return flowerList
     } catch (error) {

@@ -1,9 +1,10 @@
 const sql = require("../db");
 async function getMemberList(){
     try {
-        return await sql`
-        select (member_id) from tcf.members
+        const result = await sql`
+        select * from tcf.members
         `
+        return result
     } catch (error) {
         console.error("SQL ERROR:", error);
         console.error("Node ERROR:", error);
