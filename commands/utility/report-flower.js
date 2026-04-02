@@ -1,7 +1,9 @@
 const { SlashCommandBuilder } = require("discord.js");
-const sql = require("../../db");
+const flowerList = require("../../flowerList");
 const flowerMap = require("../../flowerMap");
 const memberMap = require("../../memberMap");
+const createFlowerEntry = require("../../functions/createFlowerEntry");
+const createProcessString = require("../../functions/createProcessString")
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -21,12 +23,20 @@ module.exports = {
       const flowerName = interaction.options.getString("flower");
       const memberID = interaction.user.id
       const tcfID = memberMap.get(memberID)
-      const flowerID = flowerMap.get(flowerName)
+      let flowerID = ''
+      if (flowerMap.has(flowerName)){
+        flowerID = flowerMap.get(flowerName)
+        
+      }
+      else if(flowerList.map((x)=> createProcessString(x)).includes(createProcessString(flowerName))){ 
+        flowerMap.forEach((_value, key) => {
+          if (createProcessString(key) === createProcessString(flowerName)){
+            flowerID = key
+          }
+        })
+      }
+      createFlowerEntry(tcfID, flowerID)
       
-      await sql`
-      insert into tcf.member_flowers (member_id, flower_id)
-      values (${tcfID}, ${flowerID})
-      `
       const response = `How luxurious! You can grow ${flowerName}! Thank you for the update, ${interaction.user.tag}!`
       await interaction.editReply(response);
 
