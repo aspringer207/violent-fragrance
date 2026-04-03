@@ -18,7 +18,7 @@ module.exports = {
     await sql`
         update tcf.questing_status
         set actively_questing = ${isQuesting}
-        where member_id = (select tcf_id from tcf.members where discord_id =${interaction.user.id}::text
+        where tcf_id = (select tcf_id from tcf.members where discord_id =${interaction.user.id}::text
         LIMIT 1)
         returning *
       `;
