@@ -17,7 +17,7 @@ module.exports = {
   async execute(interaction) {
     const privateInteraction = interaction.options.getBoolean("private");
     const discordID = interaction.user.id;
-    if ((privateInteraction)) {
+    if (privateInteraction) {
       await interaction.deferReply({ flags: MessageFlags.Ephemeral });
     } else {
       await interaction.deferReply();
@@ -45,7 +45,7 @@ module.exports = {
         `How luxurious! Here are the flowers you currently have:`,
       );
       for (const i of replyChunks) {
-        if ((privateInteraction)) {
+        if (privateInteraction) {
           interaction.followUp({
             content: `${i}`,
             flags: MessageFlags.Ephemeral,
@@ -57,9 +57,7 @@ module.exports = {
     } catch (error) {
       console.error("SQL ERROR:", error);
       console.error("Node ERROR:", error);
-      await interaction.editReply(
-        `Sorry, something went wrong.`,
-      );
+      await interaction.editReply(`Sorry, something went wrong.`);
     }
   },
 };

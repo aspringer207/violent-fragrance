@@ -24,8 +24,12 @@ module.exports = {
       const tcfID = memberMap.get(memberID);
       let flowerID;
 
-      const flowerList = await getFlowerList().then((result) => result.map((x) => [x.flower_name, x.flower_id]));
-      const flowerMap = await getFlowerList().then((result) => new Map(result.map((x) => [x.flower_name, x.flower_id])));
+      const flowerList = await getFlowerList().then((result) =>
+        result.map((x) => [x.flower_name, x.flower_id]),
+      );
+      const flowerMap = await getFlowerList().then(
+        (result) => new Map(result.map((x) => [x.flower_name, x.flower_id])),
+      );
 
       if (flowerMap.has(flowerName)) {
         flowerID = flowerMap.get(flowerName);

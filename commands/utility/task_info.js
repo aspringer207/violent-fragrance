@@ -18,9 +18,8 @@ module.exports = {
         ),
     ),
   async execute(interaction) {
-	await interaction.deferReply();
+    await interaction.deferReply();
     const rarity = interaction.options.getString("rarity");
-
 
     let responseInfo;
 
@@ -49,7 +48,9 @@ module.exports = {
 		limit 15;
       `;
     }
-    const response = responseInfo.map((row) => `${row.flower} (${row.rarity}): ${row["can complete"]}`).join("\n");
-	await interaction.editReply(response);
+    const response = responseInfo
+      .map((row) => `${row.flower} (${row.rarity}): ${row["can complete"]}`)
+      .join("\n");
+    await interaction.editReply(response);
   },
 };

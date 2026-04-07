@@ -9,15 +9,15 @@ module.exports = {
     try {
       await interaction.deferReply();
       const flowerList = await getFlowerList();
-      const flowerMap = flowerList.map(
-        (row) => [row.flower_rarity, row.flower_name]
-      );
+      const flowerMap = flowerList.map((row) => [
+        row.flower_rarity,
+        row.flower_name,
+      ]);
       const chunks = groupy(flowerMap);
 
       await interaction.editReply(`
         Bart help us! Here are the current flowers in the database:
-        Flower Rarity | Flower Name`
-      );
+        Flower Rarity | Flower Name`);
       for (const chunk of chunks) {
         await interaction.followUp(`${chunk}`);
       }
