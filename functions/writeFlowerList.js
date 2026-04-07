@@ -1,4 +1,4 @@
-const getFlowerList = require("./functions/getFlowerList");
+const getFlowerList = require("./getFlowerList");
 const fs = require('node:fs').promises;
 
 getFlowerList()
