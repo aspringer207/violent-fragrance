@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const memberMap = require("../../memberMap");
+const memberMap = require("../../functions/createMemberMap");
 const createFlowerEntry = require("../../functions/createFlowerEntry");
 const createProcessString = require("../../functions/createProcessString");
 const getFlowerList = require("../../functions/getFlowerList");
