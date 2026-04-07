@@ -1,6 +1,6 @@
 const fs = require("fs");
 const getFlowerList = require ("./functions/getFlowerList");
-async function test(newGuildieFlowers) {
+async function test(newGuildieName, newGuildieFlowers) {
 getFlowerList().then((result) => {
     const flowerMap = new Map(result.map((x) => [x.flower_name, x.flower_id]));
     const mappedFlowers = newGuildieFlowers.map((x) => {
@@ -11,7 +11,7 @@ getFlowerList().then((result) => {
             return null;
         }
     });
-    fs.writeFile("fiora.json", JSON.stringify(mappedFlowers.filter(x => x !== null)), (err) => {
+    fs.writeFile(`personal_${newGuildieName}.json`, JSON.stringify(mappedFlowers.filter(x => x !== null)), (err) => {
         if (err) {
             console.error("Error writing file:", err);
         } else {
