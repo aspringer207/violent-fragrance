@@ -9,15 +9,19 @@ This project includes third-party material subject to the licenses listed below.
 This project includes an icon derived from the *Fight Cloud* emoji from **Noto Emoji**.
 
 Original artwork:
+
 - Copyright © Google
 - Source: Noto Emoji project
 
 License:
+
 - Licensed under the Apache License, Version 2.0 (the "License")
 - You may obtain a copy of the License at:
-  https://www.apache.org/licenses/LICENSE-2.0
+  
+    ><https://www.apache.org/licenses/LICENSE-2.0>
 
 Modifications:
+
 - The original artwork has been modified for use as an application icon.
 - Modifications were made by the project author(s).
 

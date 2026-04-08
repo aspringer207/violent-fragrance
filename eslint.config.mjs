@@ -1,6 +1,7 @@
 import js from "@eslint/js";
 import globals from "globals";
 import { defineConfig } from "eslint/config";
+import markdown from "eslint-plugin-markdown";
 
 export default defineConfig([
   {
@@ -13,5 +14,29 @@ export default defineConfig([
     },
     languageOptions: { globals: globals.browser },
   },
-  { files: [["**/*.js"], ["./functions/**"]], languageOptions: { sourceType: "commonjs" } },
+  {
+    files: [["**/*.js"], ["./functions/**"]],
+    languageOptions: { sourceType: "commonjs" },
+  },
+  {
+    files: ["**/*.md"],
+    plugins: { markdown },
+    language: "markdown/gfm",
+    languageOptions: { frontmatter: "yaml" },
+    rules: { 
+      "markdown/fenced-code-language": "error",
+      "markdown/heading-increment": "error", 
+      "markdown/no-duplicate-headings": "error", 
+      "markdown/no-invalid-labels-refs": "error",
+      "markdown/no-missing-label-refs": "error",
+      "markdown/no-multiple-h1": "error",
+      "markdown/no-reference-like-urls": "error",
+      "markdown/no-refersed-media-syntax": "error",
+      "markdown/no-space-in-emphasis": "error",
+      "markdown/no-unused-definitions": "error",
+      "markdown/require-alt-text": "error",
+      "markdown/table-column-count": "error",
+    
+    },
+  },
 ]);

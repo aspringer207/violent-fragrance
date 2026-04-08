@@ -16,6 +16,7 @@
   "license": "ISC",
   "private": true,
   "dependencies": {
+    "@eslint/markdown": "^8.0.1",
     "@supabase/supabase-js": "^2.100.0",
     "bufferutil": "^4.1.0",
     "discord.js": "^14.25.1",
