@@ -1,4 +1,4 @@
-const sql = require("../db");
+const sql = require('../source/db');
 async function getMemberList(){
     try {
         const result = await sql`

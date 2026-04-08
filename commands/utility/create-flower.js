@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const sql = require("../../db");
+const sql = require('../../source/db');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("create-flower")

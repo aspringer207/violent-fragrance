@@ -1,6 +1,6 @@
 const fs = require("fs");
-const getFlowerList = require ("./functions/getFlowerList");
-async function test(newGuildieName, newGuildieFlowers) {
+const getFlowerList = require ('./getFlowerList')
+async function getGuildieFlowers(newGuildieName, newGuildieFlowers) {
 getFlowerList().then((result) => {
     const flowerMap = new Map(result.map((x) => [x.flower_name, x.flower_id]));
     const mappedFlowers = newGuildieFlowers.map((x) => {
@@ -20,4 +20,4 @@ getFlowerList().then((result) => {
 });}).catch((error) => {
     console.error("Error fetching flower list:", error);
 });}
-module.exports = test;
+module.exports = getGuildieFlowers;
