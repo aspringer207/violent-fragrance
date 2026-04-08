@@ -1,0 +1,14 @@
+{
+  // Configuration for markdownlint-cli2
+  // Using GitHub's default markdownlint rules via the custom rules package
+  
+  "customRules": ["@github/markdownlint-github"],
+  "outputFormatters": [
+    ["markdownlint-cli2-formatter-pretty", { "appendLink": true }]
+  ]
+
+  // Note: The markdown-it factory and GitHub config initialization from the 
+  // original .mjs file were JavaScript-specific and cannot be represented in JSON.
+  // If you need advanced markdown-it configuration, create a .mjs file instead
+  // with the proper filename: .markdownlint-cli2.mjs
+}
