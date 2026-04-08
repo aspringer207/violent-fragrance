@@ -14,16 +14,23 @@ module.exports = {
         .setRequired(true),
     ),
   async execute(interaction) {
-    const isQuesting = interaction.options.getBoolean("is-questing");
-    await sql`
+    await interaction.deferReply();
+    try {
+      const isQuesting = interaction.options.getBoolean("is-questing");
+      await sql`
         update tcf.questing_status
         set actively_questing = ${isQuesting}
         where tcf_id = (select tcf_id from tcf.members where discord_id =${interaction.user.id}::text
         LIMIT 1)
         returning *
       `;
-    await interaction.reply(
-      `Your questing status has been updated to ${isQuesting}.`,
-    );
+      await interaction.editReply(
+        `Your questing status has been updated to ${isQuesting}.`,
+      );
+    } catch (error) {
+      console.error("SQL ERROR:", error);
+      console.error("Node ERROR:", error);
+      await interaction.followUp(`Could not update questing status. Sorry!`);
+    }
   },
 };
