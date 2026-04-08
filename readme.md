@@ -6,10 +6,8 @@
 </div>
 </hgroup>
 
-
 <img src="/public/icon/violent-fragrance.png" align="right" height="120px" alttext="floral fight cloud" style="display: flex; margin-top: auto; margin-bottom: auto">
 </header>
 
 <hr style="margin-top: 5px;" />
 <image src="https://img.shields.io/badge/License-MIT-purple.svg"><img alt="freeCodeCamp points" src="https://img.shields.io/freecodecamp/points/aspringer207">
-
