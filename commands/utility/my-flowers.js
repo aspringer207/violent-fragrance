@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, MessageFlags } = require("discord.js");
 const chunky = require("../../functions/chunky");
-const sql = require("../../db");
+const sql = require("../../source/db");
 
 module.exports = {
   data: new SlashCommandBuilder()

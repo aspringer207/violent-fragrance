@@ -1,10 +1,9 @@
-const sql = require("../db");
+const sql = require("../source/db");
 async function getFlowerList() {
     try {
-        const flowerList = await sql`
+        return await sql`
         select * from tcf.flowers
         `
-        return flowerList
     } catch (error) {
         console.error("SQL ERROR:", error);
         console.error("Node ERROR:", error);
