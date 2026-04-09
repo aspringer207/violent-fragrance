@@ -24,7 +24,10 @@ module.exports = {
       const userNickname = interaction.member.nick
         ? interaction.member.nick
         : interaction.user.username;
-      const tcfID = memberMap.get(memberID);
+      const tcfID = await memberMap().then((map) => map.get(memberID)).catch((error) => {
+        console.error("Error retrieving tcfID from memberMap:", error);
+        throw error;
+      });
       let flowerID;
 
       const flowerList = await getFlowerList().then((result) =>
