@@ -21,10 +21,7 @@ module.exports = {
     await interaction.deferReply();
     const rarity = interaction.options.getString("rarity");
 
-    let responseInfo;
-
-    if (rarity === null) {
-      responseInfo = await sql`
+    const responseInfo = rarity === null ? await sql`
         select tcf.flowers.flower_name as flower, tcf.flowers.flower_rarity as rarity,
         count(tcf.flowers.flower_name) as "can complete"
         from tcf.member_flowers
@@ -34,9 +31,7 @@ module.exports = {
         group by (tcf.flowers.flower_rarity, tcf.flowers.flower_name)
         order by "rarity" DESC
 		limit 15;
-      `;
-    } else {
-      responseInfo = await sql`
+      ` : await sql`
         select tcf.flowers.flower_name as flower, tcf.flowers.flower_rarity as rarity,
         count(tcf.flowers.flower_name) as "can complete"
         from tcf.member_flowers
@@ -47,7 +42,7 @@ module.exports = {
         order by "can complete" DESC 
 		limit 15;
       `;
-    }
+
     const response = responseInfo
       .map((row) => `${row.flower} (${row.rarity}): ${row["can complete"]}`)
       .join("\n");
