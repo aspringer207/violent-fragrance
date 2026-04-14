@@ -1,7 +1,8 @@
 const { SlashCommandBuilder } = require("discord.js");
-const sql = "../../source/db";
-const mapProcessStrings = "../../functions/mapProcessStrings";
-const getFlowerList = require("../../functions/getFlowerList");
+const sql = require("../../source/db"); // <-- FIXED
+const getFlowerID = require("../../functions/getFlowerID");
+const createFlowerMap = require("../../functions/createFlowerMap");
+const createProcessMap = require("../../functions/createProcessMap");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -13,6 +14,7 @@ module.exports = {
         .setDescription("The flower you can grow. Spelling counts!")
         .setRequired(true),
     ),
+
   async execute(interaction) {
     await interaction.deferReply();
 
@@ -20,25 +22,26 @@ module.exports = {
     const dc = interaction.user.id;
 
     try {
-      let flowerList = await getFlowerList()
-        .then((response) =>
-          response.map((row) => [row.flower_name, row.flower_id]),
-        )
-        .then((responseArray) => new Map(responseArray));
-      const validInput = flowerList.has(flower);
-      const flowerID = validInput
-        ? flowerList.get(flower)
-        : mapProcessStrings(flowerList).get(flower);
+      const exactMap = createFlowerMap();
+      const processMap = createProcessMap();
+
+      // getFlowerID can throw ReferenceError → now caught properly
+      const flowerID = await getFlowerID(flower, exactMap, processMap);
+
+      // SQL insert
       await sql`
-      insert into tcf.member_flowers (tcf_id, flower_id)
-      select tcf.members.tcf_id, ${flowerID}
-      from tcf.members
-      where tcf.members.discord_id = ${dc}::text
+        insert into tcf.member_flowers (member_id, flower_id)
+        select tcf.members.tcf_id, ${flowerID}
+        from tcf.members
+        where tcf.members.discord_id = ${dc}::text
       `;
-      interaction.editReply(
-        `How luxurious! It's been noted that you can grow ${flower}! Thank you!`,
+
+      await interaction.editReply(
+        `How luxurious! It's been noted that you can grow ${flower}! Thank you!`
       );
+
     } catch (error) {
+      // Duplicate flower
       if (error.code === "23505") {
         console.warn("duplicate flower");
         console.table({
@@ -49,29 +52,30 @@ module.exports = {
           errorMessage: error.message,
         });
 
-        await interaction.editReply(
-          `Silly goose! You already have that flower. Better a silly goose than a creepy duck!`,
+        return interaction.editReply(
+          `Silly goose! You already have that flower. Better a silly goose than a creepy duck!`
         );
-        return;
       }
-      // ReferenceError (unrecognized flower) or other top-level errors
+
+      // Unrecognized flower (ReferenceError from getFlowerID)
       if (error instanceof ReferenceError) {
         console.warn("unrecognized flower");
         console.table({
-          userInput: interaction.options.getString("flower"),
+          userInput: flower,
           errorName: error.name,
           errorMessage: error.message,
         });
 
-        await interaction.editReply(
-          `I don't recognize that flower, sorry. Try typing the name again, or run /list-flowers to see the full list.`,
+        return interaction.editReply(
+          `I don't recognize that flower, sorry. Try typing the name again, or run /list-flowers to see the full list.`
         );
-        return;
       }
+
+      // Other SQL or Node errors
       console.error("SQL ERROR:", error);
       console.error("Node ERROR:", error);
 
-      await interaction.followUp(`Could not insert flower. Sorry!`);
+      return interaction.followUp(`Could not insert flower. Sorry!`);
     }
   },
 };

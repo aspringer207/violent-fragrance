@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 
-const { getCounts } = require("../../functions/getCounts")
+const getCounts = require("../../functions/getCounts")
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("get-counts")
